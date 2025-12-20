@@ -1,0 +1,91 @@
+* {
+  color: #d8dee9;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #2e3440;
+  padding: 5px;
+}
+
+.activated{
+  display: inline-block;
+}
+.deactivated{
+  display: none;
+}
+
+.add-todo-textbox {
+  padding: 8px 16px;
+  background-color: #3b4252;
+  border: 1px solid #434c5e;
+  border-radius: 4px;
+  color: #d8dee9;
+  width: 60%;
+}
+
+.add-todo-textbox:focus {
+  outline: none;
+  border: 1px solid #4c566a;
+}
+
+.add-todo-btn {
+  background-color: #3b4252;
+  border: 1px solid #434c5e;
+  border-radius: 4px;
+  color: #d8dee9;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.approve-todo-btn {
+  background-color: #a3be8c;
+  border: 1px solid #434c5e;
+  border-radius: 4px;
+  color: #3b4252;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.cancel-todo-btn {
+  background-color: #bf616a;
+  border: 1px solid #434c5e;
+  border-radius: 4px;
+  color: #d8dee9;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.container {
+  max-width: 70%;
+  margin: auto;
+}
+
+.add-section{
+  display: flex;
+  gap: .75dvw;
+}
+
+.todo-list{
+  margin-top: 2dvh;
+  margin-bottom: 2dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 1dvh;
+}
+
+.todo-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

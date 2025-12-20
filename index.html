@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <title>Todo App</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="add-section">
+        <button id="add-todo-btn" class="add-todo-btn activated">
+          Add Todo
+        </button>
+        <input
+          type="text"
+          id="todo-input"
+          class="add-todo-textbox deactivated"
+          placeholder="Add a new todo..." />
+        <button id="approve-todo-btn" class="approve-todo-btn deactivated">
+          Approve Todo
+        </button>
+        <button id="cancel-todo-btn" class="cancel-todo-btn deactivated">
+          Cancel
+        </button>
+      </div>
+      <div id="todo-list" class="todo-list"></div>
+    </div>
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
