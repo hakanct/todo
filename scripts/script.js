@@ -72,7 +72,12 @@ function cancel() {
   addTodoTextbox.value = "";
 }
 
-// TODO: yeni ozellik ile yeni eklenen todolari todoListParsed e ekle ve cookie guncelle
+function deleteTodo(todoText) {
+  let todo = todoList[todoText];
+  delete todoList[todoText];
+  console.log("Silinen todo: " + todoText + " Değer: " + todo);
+}
+
 function approve() {
   let todoText = addTodoTextbox.value.trim();
   if (todoText === "") {
@@ -86,29 +91,63 @@ function approve() {
   listTodos();
 }
 
+function lineThroughLabel(labelElement, isChecked) {
+  if (isChecked) {
+    labelElement.classList.add("checeked-label");
+  } else {
+    labelElement.classList.remove("checeked-label");
+  }
+}
+
 function listTodos() {
+  console.clear();
   let existingTodo = Object.keys(todoList);
   let todoDiv = document.getElementById("todo-list");
   todoDiv.innerHTML = "";
   console.log("Listelemek icin Mevcut todo listesi: ", existingTodo);
-  console.log("Listelemek icin Mevcut todo listesi (dizi): ", existingTodo);
   for (let i = 0; i < existingTodo.length; i++) {
     console.log("listelenen: " + existingTodo[i]);
     let todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");
+
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.classList.add("todo-checkbox");
-    let label = document.createElement("span");
-    label.textContent = existingTodo[i];
-    todoItem.appendChild(checkbox);
-    todoItem.appendChild(label);
-    todoDiv.appendChild(todoItem);
-
     checkbox.checked = todoList[existingTodo[i]];
 
+    let label = document.createElement("span");
+    label.textContent = existingTodo[i];
+
+    let buttonsDiv = document.createElement("div");
+    buttonsDiv.classList.add("buttons-div");
+
+    let edit = document.createElement("span");
+    edit.innerHTML = "&#128393;";
+    edit.classList.add("edit");
+    edit.dataset.todoText = existingTodo[i];
+
+    let trash = document.createElement("span");
+    trash.innerHTML = "&#128465;";
+    trash.classList.add("trash");
+    trash.dataset.todoText = existingTodo[i];
+    trash.addEventListener("click", function (event) {
+      let todoText = event.target.dataset.todoText;
+      deleteTodo(todoText);
+      setCookie("todos", JSON.stringify(todoList), 30);
+      listTodos();
+      console.log("Güncel todo listesi: ", todoList);
+    });
+
+    todoItem.appendChild(checkbox);
+    todoItem.appendChild(label);
+    todoItem.appendChild(buttonsDiv);
+    buttonsDiv.appendChild(edit);
+    buttonsDiv.appendChild(trash);
+    todoDiv.appendChild(todoItem);
+
+    lineThroughLabel(label, checkbox.checked);
+
     todoItem.addEventListener("click", function () {
-      let isChecked = checkbox.checked;
       todoList[existingTodo[i]] = checkbox.checked;
       setCookie("todos", JSON.stringify(todoList), 30);
       console.log(
@@ -117,6 +156,7 @@ function listTodos() {
           " -> " +
           checkbox.checked
       );
+      lineThroughLabel(label, checkbox.checked);
     });
   }
 }

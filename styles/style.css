@@ -2,6 +2,7 @@
   color: #d8dee9;
   margin: 0;
   padding: 0;
+  font-size: large;
 }
 
 body {
@@ -76,16 +77,50 @@ body {
   gap: .75dvw;
 }
 
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: .75dvw;
+  padding: 4px 8px;
+  border-top: 1px solid #4c566a;
+  border-bottom: 1px solid #4c566a;
+}
+
 .todo-list{
   margin-top: 2dvh;
   margin-bottom: 2dvh;
   display: flex;
   flex-direction: column;
-  gap: 1dvh;
+  gap: .75dvh;
 }
 
 .todo-checkbox {
   width: 20px;
   height: 20px;
   cursor: pointer;
+}
+
+.checeked-label {
+  text-decoration: line-through;
+  text-underline-offset: 4px;
+}
+
+.buttons-div {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.edit {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 18px;
+  color: #ebcb8b;
+}
+
+.trash {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 18px;
+  color: #bf616a;
 }
