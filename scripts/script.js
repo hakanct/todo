@@ -36,7 +36,14 @@ let cancelTodoBtn = document.getElementById("cancel-todo-btn");
   "Örnek Todo 5": false,
   "Örnek Todo 6": true
 }; */
-let todoList = JSON.parse(getCookie("todos") ? getCookie("todos") : "{}");
+//let todoList = JSON.parse(getCookie("todos") ? getCookie("todos") : "{}");
+let todoList;
+try {
+  const parsed = JSON.parse(getCookie("todos") || "{}");
+  todoList = typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+} catch {
+  todoList = {};
+}
 //console.log("Todo listesi (ham): " + JSON.stringify(todoList));
 //console.log("Çerezden alınan todo listesi: " + todoListCookie);
 console.log("Todo listesi cerez (ham): " + todoList);
@@ -73,9 +80,14 @@ function cancel() {
 }
 
 function deleteTodo(todoText) {
-  let todo = todoList[todoText];
+  if (!(todoText in todoList)) {
+    console.log("Todo bulunamadı:", todoText);
+    return;
+  }
+
   delete todoList[todoText];
-  console.log("Silinen todo: " + todoText + " Değer: " + todo);
+  setCookie("todos", JSON.stringify(todoList), 30);
+  console.log("Silinen todo:", todoText);
 }
 
 function approve() {
@@ -131,9 +143,9 @@ function listTodos() {
     trash.classList.add("trash");
     trash.dataset.todoText = existingTodo[i];
     trash.addEventListener("click", function (event) {
+      event.stopPropagation(); // prevent parent click
       let todoText = event.target.dataset.todoText;
       deleteTodo(todoText);
-      setCookie("todos", JSON.stringify(todoList), 30);
       listTodos();
       console.log("Güncel todo listesi: ", todoList);
     });
@@ -147,7 +159,7 @@ function listTodos() {
 
     lineThroughLabel(label, checkbox.checked);
 
-    todoItem.addEventListener("click", function () {
+    checkbox.addEventListener("click", function () {
       todoList[existingTodo[i]] = checkbox.checked;
       setCookie("todos", JSON.stringify(todoList), 30);
       console.log(
