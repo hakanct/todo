@@ -124,3 +124,37 @@ body {
   font-size: 18px;
   color: #bf616a;
 }
+
+.edit-todo-textbox {
+  font-size: medium;
+  padding: 4px 8px;
+  background-color: #3b4252;
+  border: 1px solid #434c5e;
+  border-radius: 4px;
+  color: #d8dee9;
+  width: 60%;
+}
+
+.cancel-edit-btn {
+  background-color: #bf616a;
+  border: 1px solid #434c5e;
+  border-radius: 4px;
+  color: #d8dee9;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.approve-edit-btn {
+  background-color: #a3be8c;
+  border: 1px solid #434c5e;
+  border-radius: 4px;
+  color: #3b4252;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+}

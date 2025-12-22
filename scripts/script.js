@@ -90,6 +90,60 @@ function deleteTodo(todoText) {
   console.log("Silinen todo:", todoText);
 }
 
+function editTodo(todoIndex, todoText) {
+  let todoInnerHTML = document.querySelector(`div.todo-item[data-todo-index='${todoIndex}']`);
+  let currentTodoText = todoText;
+
+  todoInnerHTML.innerHTML = "";
+
+  let editTextbox = document.createElement("input");
+  editTextbox.type = "text";
+  editTextbox.value = currentTodoText;
+  editTextbox.classList.add("edit-todo-textbox");
+
+  let cancelEditBtn = document.createElement("button");
+  cancelEditBtn.textContent = "Cancel";
+  cancelEditBtn.classList.add("cancel-edit-btn");
+  cancelEditBtn.addEventListener("click", function () {
+    listTodos();
+  });
+
+  let approveEditBtn = document.createElement("button");
+  approveEditBtn.textContent = "Approve";
+  approveEditBtn.classList.add("approve-edit-btn");
+  approveEditBtn.addEventListener("click", function () {
+    let newTodoText = editTextbox.value.trim();
+    if (newTodoText === "") {
+      console.log("Güncelleme başarısız: Boş metin");
+      return;
+    }
+    updateTodo(currentTodoText, newTodoText);
+    listTodos();
+  });
+
+  todoInnerHTML.appendChild(editTextbox);
+  todoInnerHTML.appendChild(cancelEditBtn);
+  todoInnerHTML.appendChild(approveEditBtn);
+}
+
+function updateTodo(oldText, newText) {
+  if (!(oldText in todoList)) return;
+  if (newText in todoList && newText !== oldText) return;
+
+  const newObj = {};
+
+  Object.keys(todoList).forEach(key => {
+    if (key === oldText) {
+      newObj[newText] = todoList[key];
+    } else {
+      newObj[key] = todoList[key];
+    }
+  });
+
+  todoList = newObj;
+  setCookie("todos", JSON.stringify(todoList), 30);
+}
+
 function approve() {
   let todoText = addTodoTextbox.value.trim();
   if (todoText === "") {
@@ -121,6 +175,7 @@ function listTodos() {
     console.log("listelenen: " + existingTodo[i]);
     let todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");
+    todoItem.dataset.todoIndex = i;
 
     let checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -137,6 +192,14 @@ function listTodos() {
     edit.innerHTML = "&#128393;";
     edit.classList.add("edit");
     edit.dataset.todoText = existingTodo[i];
+    edit.addEventListener("click", function (event) {
+      event.stopPropagation(); // prevent parent click
+      let todoIndex = i;
+      let todoText = event.target.dataset.todoText;
+      editTodo(todoIndex, todoText);
+      //listTodos();
+      //console.log("Güncel todo listesi: ", todoList);
+    });
 
     let trash = document.createElement("span");
     trash.innerHTML = "&#128465;";
