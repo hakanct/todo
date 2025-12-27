@@ -46,7 +46,7 @@ try {
 }
 //console.log("Todo listesi (ham): " + JSON.stringify(todoList));
 //console.log("Çerezden alınan todo listesi: " + todoListCookie);
-console.log("Todo listesi cerez (ham): " + todoList);
+//console.log("Todo listesi cerez (ham): " + todoList);
 
 function addToTodo(todoText) {
   todoList[todoText] = false;
